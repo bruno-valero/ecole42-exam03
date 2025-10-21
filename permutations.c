@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   permutations.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brunofer <brunofer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: valero <valero@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 15:55:04 by brunofer          #+#    #+#             */
-/*   Updated: 2025/10/20 19:02:35 by brunofer         ###   ########.fr       */
+/*   Updated: 2025/10/21 10:28:15 by valero           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,17 +33,17 @@ static void	permutations(int start, int end, char *str)
 	int	i;
 
 	if (start == end)
-	{
 		ft_putstr(str);
-		return ;
-	}
-	i = start;
-	while (start < end)
+	else
 	{
-		ft_swap(str + i, str + start);
-		permutations(start + 1, end, str);
-		ft_swap(str + i, str + start);
-		i++;
+		i = start;
+		while (i < end)
+		{
+			ft_swap(str + i, str + start);
+			permutations(start + 1, end, str);
+			ft_swap(str + i, str + start);
+			i++;
+		}
 	}
 }
 
