@@ -6,7 +6,7 @@
 /*   By: valero <valero@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 13:50:14 by valero            #+#    #+#             */
-/*   Updated: 2025/10/22 18:03:48 by valero           ###   ########.fr       */
+/*   Updated: 2025/10/22 18:28:34 by valero           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static void	rip(int start, char *result, const char *src, const char *original, 
 
 	if (is_valid_closing(original))
 		puts(original);
-	else if (ft_strlen(result) == len && is_valid_closing(result))
+	else if (result[len - 1] && is_valid_closing(result))
 		puts(result);
 	else
 	{
