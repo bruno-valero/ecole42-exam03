@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   nqueens.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brunofer <brunofer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: valero <valero@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 12:46:03 by brunofer          #+#    #+#             */
-/*   Updated: 2025/10/20 15:54:32 by brunofer         ###   ########.fr       */
+/*   Updated: 2025/10/21 21:46:04 by valero           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,17 +30,6 @@ int	main(int argc, char **argv)
 	n_queens(n, tab, 0);
 }
 
-void	init_array(int *tab, int size)
-{
-	int	i;
-
-	i = -1;
-	while (++ i < size)
-		tab[i] = -1;
-}
-
-
-
 static void	n_queens(int n, int *tab, int column)
 {
 	int	row;
@@ -59,7 +48,15 @@ static void	n_queens(int n, int *tab, int column)
 			n_queens(n, tab, column + 1);
 		}
 	}
+}
 
+void	init_array(int *tab, int size)
+{
+	int	i;
+
+	i = -1;
+	while (++ i < size)
+		tab[i] = -1;
 }
 
 static int	is_same_diagonal(int last_x, int last_y, int curr_x, int curr_y);
