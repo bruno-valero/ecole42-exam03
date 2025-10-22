@@ -6,7 +6,7 @@
 /*   By: valero <valero@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 13:50:14 by valero            #+#    #+#             */
-/*   Updated: 2025/10/22 15:01:09 by valero           ###   ########.fr       */
+/*   Updated: 2025/10/22 16:40:58 by valero           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void	sub(const char *parenthesis, char *result);
 static int	ft_strlen(char *str);
 static void	*ft_bzero(void *s, int size);
 static int	is_valid_closing(const char *parenthesis);
-static void	rip(int start, int *selected, char *result, const char *src, int len);
+static void	rip(int start, int *selected, char *result, const char *src, const char *original, int len, char target);
 
 int	main(int argc, char **argv)
 {
@@ -31,14 +31,20 @@ int	main(int argc, char **argv)
 	char	result[len + 1];
 	ft_bzero(selected, len * sizeof(int));
 	ft_bzero(result, (len + 1) * sizeof(int));
-	rip(0, selected, result, src, ft_strlen(src));
+	int	balance = verify(argv[1]);
+	char target = '(';
+	if (balance < 0)
+		target = ')';
+	rip(0, selected, result, src, argv[1], len, target);
 }
 
-static void	rip(int start, int *selected, char *result, const char *src, int len)
+static void	rip(int start, int *selected, char *result, const char *src, const char *original, int len, char target)
 {
 	int	i;
 
-	if (ft_strlen(result) == len && is_valid_closing(result))
+	if (is_valid_closing(original))
+		puts(original);
+	else if (ft_strlen(result) == len && is_valid_closing(result))
 		puts(result);
 	else
 	{
@@ -47,9 +53,13 @@ static void	rip(int start, int *selected, char *result, const char *src, int len
 		{
 			if (!selected[i])
 			{
+				if (src[i] == ' ' && original[start] != target)
+					continue ;
+				else if (src[i] != ' ' && original[start] != src[i])
+					continue ;
 				selected[i] = 1;
 				result[start] = src[i];
-				rip(start + 1, selected, result, src, len);
+				rip(start + 1, selected, result, src, original, len, target);
 				selected[i] = 0;
 				result[start] = 0;
 			}
