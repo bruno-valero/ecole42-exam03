@@ -6,40 +6,33 @@
 /*   By: valero <valero@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 13:50:14 by valero            #+#    #+#             */
-/*   Updated: 2025/10/22 17:15:57 by valero           ###   ########.fr       */
+/*   Updated: 2025/10/22 18:03:48 by valero           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 
 static int	verify(const char *parenthesis);
-static void	sub(const char *parenthesis, char *result);
 static int	ft_strlen(char *str);
 static void	*ft_bzero(void *s, int size);
 static int	is_valid_closing(const char *parenthesis);
-static void	rip(int start, int *selected, char *result, const char *src, const char *original, int len, char target);
+static void	rip(int start, char *result, const char *src, const char *original, int len, char target);
 
 int	main(int argc, char **argv)
 {
 	if (argc < 2)
 		return (1);
 	int		len = ft_strlen(argv[1]);
-	char	src[len + 1];
-	src[len] = 0;
-	sub(argv[1], src);
-	int		selected[3];
 	char	result[len + 1];
-	ft_bzero(selected, 3 * sizeof(int));
-	ft_bzero(result, (len + 1) * sizeof(int));
+	ft_bzero(result, (len + 1) * sizeof(char));
 	int	balance = verify(argv[1]);
 	char target = '(';
 	if (balance < 0)
 		target = ')';
-	(void)src;
-	rip(0, selected, result, "() ", argv[1], len, target);
+	rip(0, result, "() ", argv[1], len, target);
 }
 
-static void	rip(int start, int *selected, char *result, const char *src, const char *original, int len, char target)
+static void	rip(int start, char *result, const char *src, const char *original, int len, char target)
 {
 	int	i;
 
@@ -56,11 +49,8 @@ static void	rip(int start, int *selected, char *result, const char *src, const c
 				continue ;
 			else if (src[i] != ' ' && original[start] != src[i])
 				continue ;
-			(void)selected;
-			// selected[i] = 1;
 			result[start] = src[i];
-			rip(start + 1, selected, result, src, original, len, target);
-			// selected[i] = 0;
+			rip(start + 1, result, src, original, len, target);
 			result[start] = 0;
 		}
 	}
@@ -102,31 +92,6 @@ static int	verify(const char *parenthesis)
 			result--;
 	}
 	return (result);
-}
-
-static void	sub(const char *parenthesis, char *result)
-{
-	int		i;
-	int		balance;
-	char	remove;
-
-	balance = verify(parenthesis);
-	remove = '(';
-	if (balance < 0)
-		remove = ')';
-	if (balance < 0)
-		balance = -balance;
-	i = -1;
-	while (parenthesis[++i])
-	{
-		if (balance && parenthesis[i] == remove)
-		{
-			result[i] = ' ';
-			balance--;
-		}
-		else
-			result[i] = parenthesis[i];
-	}
 }
 
 static int	ft_strlen(char *str)
